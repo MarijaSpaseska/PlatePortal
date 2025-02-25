@@ -1,0 +1,81 @@
+﻿@model List<PlatePortal.Domain.DomainModels.Product>
+
+@{
+    ViewData["Title"] = "Appetizers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <h1>Appetizers</h1>
+
+    <hr />
+
+    @*<p>
+            <a asp-action="Create" class="btn btn-success">Create New</a>
+        </p>*@
+
+</div>
+
+<div class="container">
+
+    <div class="d-flex flex-row flex-wrap justify-content-evenly align-content-stretch align-content-center">
+        <input class="form-control font-weight-bold m-5 border border-info" id="search" type="text" placeholder="Search here...">
+    </div>
+
+    <div id="products" class="d-flex flex-row flex-wrap justify-content-between align-content-stretch align-content-center">
+
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            var item = Model[i];
+
+            <div class="card mb-3 p-3" style="max-width: 535px;">
+                <div class="row g-0">
+                    <div class="col-md-5">
+                        <img src="@item.MenuItemImage" class="img-fluid rounded-start" alt="movie-poster" style="width:100%">
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body">
+                            <h4 class="card-title text-center">@item.MenuItemName</h4>
+                            <h5 class="card-subtitle text-center"><span class="font-weight-normal">@item.MenuItemType</span></h5>
+                            <h6 class="card-text text-center"><span class="font-weight-normal">@item.MenuItemDescription</span></h6>
+
+                            <hr />
+                            <h6 class="card-text p-0 text-center">By: <span class="font-weight-normal">@item.RestaurantName</span></h6>
+                            <img src="@item.RestaurantLogo" alt="restaurant-logo" style="height:50px" class="rounded mx-auto d-block">
+                            <br />
+                            <h5 class="card-subtitle text-center">Price: <span>@item.MenuItemPrice</span>den</h5>
+                            <br />
+                            <div class="text-center">
+                                <a asp-action="AddProductToCart" asp-route-id="@item.Id" class="btn btn-success btn">Add to Cart</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-0">
+                    <div class="col-md-4"><a class="btn btn-sm btn-outline-secondary" style="display:block" asp-action="Details" asp-route-id="@item.Id">Details</a></div>
+                    <div class="col-md-4"><a class="btn btn-sm btn-secondary" style="display:block" asp-action="Edit" asp-route-id="@item.Id">Edit</a></div>
+                    <div class="col-md-4"><a class="btn btn-sm btn-danger" style="display:block" asp-action="Delete" asp-route-id="@item.Id">Delete</a></div>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+
+@section scripts{
+
+    <script>
+
+            $(document).ready(function () {
+                $("#search").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#products .card").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
+
+    </script>
+
+}

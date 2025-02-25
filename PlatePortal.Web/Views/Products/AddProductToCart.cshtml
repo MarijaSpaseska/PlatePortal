@@ -1,0 +1,57 @@
+﻿@model PlatePortal.Domain.DTO.AddToShoppingCartDto
+
+@{
+    ViewData["Title"] = "Add Product to Shopping Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <h1>Add Selected Product to Shopping Cart</h1>
+    <hr />
+</div>
+    <div class="row">
+
+        <div class="col-md-9 m-auto">
+
+            <form asp-action="AddProductToCart" method="post">
+                <input type="hidden" asp-for="ProductId" />
+
+                <div class="form-group">
+                    <label asp-for="SelectedProduct.MenuItemName"></label>
+                    <input disabled asp-for="SelectedProduct.MenuItemName" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="SelectedProduct.MenuItemType"></label>
+                    <input disabled asp-for="SelectedProduct.MenuItemType" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="SelectedProduct.MenuItemDescription"></label>
+                    <input disabled asp-for="SelectedProduct.MenuItemDescription" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="SelectedProduct.RestaurantName"></label>
+                    <input disabled asp-for="SelectedProduct.RestaurantName" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="SelectedProduct.MenuItemPrice"></label>
+                    <input disabled asp-for="SelectedProduct.MenuItemPrice" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Quantity"></label>
+                    <input asp-for="Quantity" class="form-control" />
+                </div>
+
+                <div class="form-group text-center">
+                    <input type="submit" value="Save" class="btn btn-success" />
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>

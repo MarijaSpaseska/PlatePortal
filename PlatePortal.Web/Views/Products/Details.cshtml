@@ -1,0 +1,52 @@
+﻿@model PlatePortal.Domain.DomainModels.Product
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <h1>Details</h1>
+</div>
+<div>
+
+    <hr />
+
+    <div class="row justify-content-center">
+        <div class="col-6 text-center">
+            <h6 class="text-center">Product Details</h6>
+            <div class="card border-0" style="width: 100%; max-height:800px">
+                <img src="@Html.DisplayFor(model => model.MenuItemImage)" class="card-img-top" alt="product" style="height:40%">
+                <div class="card-body text-center">
+                    <h6>@Html.DisplayFor(model => model.MenuItemName)</h6>
+                    <h6 class="card-text"><span class="font-weight-normal">@Html.DisplayFor(model => model.MenuItemType)</span></h6>
+                    <h6 class="card-text"><span class="font-weight-normal">@Html.DisplayFor(model => model.MenuItemDescription)</span></h6>
+                    <h6 class="card-text"><span class="font-weight-normal">@Html.DisplayFor(model => model.MenuItemPrice)den</span></h6>
+
+</div>
+            </div>
+        </div>
+        <div class="col-6 text-center">
+            <h6 class="text-center">Restaurant Details</h6>
+            <div class="card border-0" style="width: 100%; max-height: 800px ">
+                <img src="@Html.DisplayFor(model => model.RestaurantLogo)" class="card-img-top img-fluid" alt="restaurant">
+                <div class="card-body text-center">
+                    <h6>@Html.DisplayFor(model => model.RestaurantName)</h6>
+                    <h6 class="card-text"><span class="font-weight-normal">Address: @Html.DisplayFor(model => model.RestaurantAddress)</span></h6>
+                    <h6 class="card-text"><span class="font-weight-normal">Opening Hours: @Html.DisplayFor(model => model.RestaurantOpeningHours)</span></h6>
+                    <h6 class="card-text"><span class="font-weight-normal">Delivery Time: @Html.DisplayFor(model => model.RestaurantDeliveryTime)</span></h6>
+                    <h6 class="card-text"><span class="font-weight-normal">Cuisine: @Html.DisplayFor(model => model.RestaurantCuisine)</span></h6>
+
+</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="text-center">
+    @if (this.User.Identity.IsAuthenticated)
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary">Edit</a>
+    }
+        <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+    </div>

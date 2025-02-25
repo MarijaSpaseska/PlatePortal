@@ -1,0 +1,96 @@
+﻿@using Microsoft.Extensions.Options
+@inject IOptions<PlatePortal.Domain.StripeSettings> Stripe
+@model PlatePortal.Domain.DTO.ShoppingCartDto
+
+@{
+    ViewData["Title"] = "ShoopingCartInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="text-center">
+        <h1>Shopping Cart Info</h1>
+        <hr />
+        @*<a class="btn btn-success my-2" asp-controller="ShoppingCart" asp-action="OrderNow">Order Now</a>*@
+
+        
+            
+                @if (Model.TotalPrice != 0)
+                {
+                    <form asp-controller="ShoppingCart" asp-action="PayOrder" method="post">
+                        <article>
+                            <script src="https://checkout.stripe.com/checkout.js"
+                                    class="stripe-button btn-lg"
+                                    data-key="@Stripe.Value.PublishableKey"
+                                    data-locale="auto"
+                                    data-description="Plate Portal Payment"
+                                    data-amount="@(Model.TotalPrice * 100)"
+                                    data-label="Pay @(Model.TotalPrice)den">
+                            </script>
+                        </article>
+                    </form>
+                }
+     
+        
+
+    </div>
+
+    <div class="container my-4">
+
+
+
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>By</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Sum</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.ProductInShoppingCarts.Count; i++)
+                {
+                    var item = Model.ProductInShoppingCarts[i];
+
+                    <tr>
+                        <th scope="row">@(i+1)</th>
+                        <td>@item.Product.MenuItemName</td>
+                        <td>@item.Product.MenuItemType</td>
+                        <td>@item.Product.MenuItemDescription</td>
+                        <td>@item.Product.RestaurantName</td>
+                        <td>@(item.Product.MenuItemPrice)den</td>
+                        <td>@item.Quantity</td>
+                        <td>@(item.Product.MenuItemPrice * item.Quantity)den</td>
+                        <td>
+                            <a class="btn btn-danger" asp-controller="ShoppingCart" asp-action="DeleteProductFromShoppingCart" asp-route-id="@item.ProductId">Delete</a>
+                        </td>
+                    </tr>
+                }
+
+
+            </tbody>
+            <tfoot>
+
+                <tr>
+                    <th scope="col"></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>Total Price:</th>
+                    <th>@(Model.TotalPrice)den</th>
+                    <th></th>
+                </tr>
+
+            </tfoot>
+        </table>
+
+    </div>
+</div>

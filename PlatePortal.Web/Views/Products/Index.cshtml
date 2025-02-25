@@ -1,0 +1,179 @@
+﻿@model List<PlatePortal.Domain.DomainModels.Product>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <h1>All Products</h1>
+    <hr />
+    @if (this.User.Identity.IsAuthenticated)
+    {
+        <p>
+            <a asp-action="Create" class="btn btn-success">Create New Product</a>
+        </p>
+    }
+    </div>
+
+    <div class="container">
+        <div class="d-flex flex-row flex-wrap justify-content-evenly align-content-stretch align-content-center">
+            <input class="form-control font-weight-bold m-5 border border-info" id="search" type="text" placeholder="Search here...">
+        </div>
+
+        <div id="products" class="d-flex flex-row flex-wrap justify-content-between align-content-stretch align-content-center">
+
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var item = Model[i];
+
+                <div class="card mb-3 p-3" style="max-width: 535px;">
+                    <div class="row g-0">
+                        <div class="col-md-5">
+                            <img src="@item.MenuItemImage" class="img-fluid rounded-start" alt="movie-poster" style="width:100%">
+                        </div>
+                        <div class="col-md-7">
+                            <div class="card-body">
+                                <h4 class="card-title text-center">@item.MenuItemName</h4>
+                                <h5 class="card-subtitle text-center"><span class="font-weight-normal">@item.MenuItemType</span></h5>
+                                <h6 class="card-text text-center"><span class="font-weight-normal">@item.MenuItemDescription</span></h6>
+
+                                <hr />
+                                <h6 class="card-text p-0 text-center">By: <span class="font-weight-normal">@item.RestaurantName</span></h6>
+                                <img src="@item.RestaurantLogo" alt="restaurant-logo" style="height:50px" class="rounded mx-auto d-block">
+                                <br />
+                                <h5 class="card-subtitle text-center">Price: <span>@item.MenuItemPrice</span>den</h5>
+                                <br />
+                                @if (this.User.Identity.IsAuthenticated)
+                                {
+                                    <div class="text-center">
+                                        <a asp-action="AddProductToCart" asp-route-id="@item.Id" class="btn btn-success btn">Add to Cart</a>
+
+                                    </div>
+                                }
+                            </div>
+                                
+                        </div>
+                    </div>
+                    <div class="row g-0">
+                        <div class="col-md-4"><a class="btn btn-sm btn-outline-secondary" style="display:block" asp-action="Details" asp-route-id="@item.Id">Details</a></div>
+                        @if (this.User.Identity.IsAuthenticated)
+                        {
+                            <div class="col-md-4"><a class="btn btn-sm btn-secondary" style="display:block" asp-action="Edit" asp-route-id="@item.Id">Edit</a></div>
+                            <div class="col-md-4"><a class="btn btn-sm btn-danger" style="display:block" asp-action="Delete" asp-route-id="@item.Id">Delete</a></div>
+                        }
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+
+
+    @section scripts{
+
+        <script>
+
+            $(document).ready(function () {
+                $("#search").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#products .card").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
+
+        </script>
+
+    }
+
+
+
+
+    @*
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MenuItemName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MenuItemType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MenuItemDescription)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MenuItemPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MenuItemImage)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RestaurantName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RestaurantAddress)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RestaurantOpeningHours)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RestaurantDeliveryTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RestaurantCuisine)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RestaurantLogo)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+        @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MenuItemName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MenuItemType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MenuItemDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MenuItemPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MenuItemImage)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RestaurantName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RestaurantAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RestaurantOpeningHours)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RestaurantDeliveryTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RestaurantCuisine)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RestaurantLogo)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+        }
+            </tbody>
+        </table>
+    *@
+

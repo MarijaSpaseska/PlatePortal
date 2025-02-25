@@ -400,3 +400,6 @@ FodyWeavers.xsd
 # Settings
 appsettings.json
 appsettings.Development.json
+
+# Files
+PlatePortalApplicationUsers.xlsx
